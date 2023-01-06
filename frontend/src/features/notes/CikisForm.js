@@ -1,0 +1,89 @@
+import { useState, useEffect } from "react"
+import { useCikisMutation } from "./notesApiSlice"
+import { useNavigate } from "react-router-dom"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSave} from "@fortawesome/free-solid-svg-icons"
+import useAuth from "../../hooks/useAuth"
+
+const EditNoteForm = ({ note }) => {
+
+    const { username} = useAuth()
+
+    const [cikisNote, {
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    }] = useCikisMutation()
+
+
+    const navigate = useNavigate()
+
+    const [goturen, setGoturen] = useState(note.goturen)
+    
+
+    useEffect(() => {
+
+        if (isSuccess ) {
+            setGoturen('')            
+            navigate('/dash/notes')
+        }
+
+    }, [isSuccess, navigate])
+
+    const onGoturenChanged = e => setGoturen(e.target.value)
+    
+
+    const canSave = [goturen].every(Boolean) && !isLoading
+
+    const onSaveNoteClicked = async (e) => {
+        if (canSave) {
+            await cikisNote({ id: note.id, user: username, goturen})
+        }
+    }
+
+    
+
+    const errClass = (isError ) ? "errmsg" : "offscreen"
+    const validGoturenClass = !goturen ? "form__input--incomplete" : ''    
+
+    const errContent = (error?.data?.message) ?? ''
+    
+    const content = (
+        <div className="form_wrapper">
+            <p className={errClass}>{errContent}</p>
+
+            <form className="form" onSubmit={e => e.preventDefault()}>
+                <div className="form__title-row">
+                    <h2>Park Araç Çıkışı</h2>
+                    <div className="form__action-buttons">
+                        <button
+                            className="icon-button"
+                            title="Save"
+                            onClick={onSaveNoteClicked}
+                            disabled={!canSave}
+                        >
+                            <FontAwesomeIcon icon={faSave} />
+                        </button>
+                    </div>
+                </div>
+                <label className="form__label" htmlFor="goturen">
+                    Götüren Çekici Plakası:</label>
+                <input
+                    className={`form__input ${validGoturenClass}`}
+                    id="goturen"
+                    name="goturen"
+                    type="text"
+                    autoComplete="off"
+                    value={goturen}
+                    onChange={onGoturenChanged}
+                />
+                
+            </form>
+        </div>
+    )
+
+    return content
+}
+
+export default EditNoteForm
