@@ -7,7 +7,7 @@ import { faSave } from "@fortawesome/free-solid-svg-icons"
 
 const NewNoteForm = () => {
 
-    const { username, isManager, isAdmin } = useAuth()
+    const { username} = useAuth()
 
     const [addNewNote, {
         isLoading,
@@ -62,15 +62,15 @@ const NewNoteForm = () => {
             <form className="form" onSubmit={onSaveNoteClicked}>
                 <div className="form__title-row">
                     <h2>Yeni Park Girişi</h2>
-                    <div className="form__action-buttons">
-                        <button
-                            className="icon-button"
-                            title="Save"
-                            disabled={!canSave}
-                        >
-                            <FontAwesomeIcon icon={faSave} />
-                        </button>
-                    </div>
+                </div>
+                <div className="form__action-buttons">
+                    <button
+                        className="form__button icon-button success__button"
+                        title="Save"
+                        disabled={!canSave}
+                    >
+                        <FontAwesomeIcon icon={faSave} />
+                    </button>
                 </div>
                 <label className="form__label" htmlFor="getiren">
                     Getiren Çekici Plakası:</label>
@@ -118,8 +118,7 @@ const NewNoteForm = () => {
                     value={mal}
                     onChange={onMalChanged}
                 />
-                
-
+                               
             </form>
         </div>
     )

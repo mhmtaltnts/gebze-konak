@@ -13,13 +13,27 @@ const DashFooter = () => {
     /* const date = new Date()
     const today = new Intl.DateTimeFormat('tr-TR', { dateStyle: 'full', timeStyle: 'long' }).format(date) */
 
-    const onGoHomeClicked = () => navigate('/dash')
+    
 
     let goHomeButton = null
     if (pathname !== '/dash') {
+        const onGoHomeClicked = () => navigate('/dash')
         goHomeButton = (
             <button
-                className="dash-footer__button icon-button"
+                className="dash-footer__button icon-button primary__button"
+                title="Home"
+                onClick={onGoHomeClicked}
+            >
+                <FontAwesomeIcon icon={faHouse} />
+            </button>
+        )
+    }
+
+    if (pathname === '/dash') {
+        const onGoHomeClicked = () => navigate('/')
+        goHomeButton = (
+            <button
+                className="dash-footer__button icon-button primary__button"
                 title="Home"
                 onClick={onGoHomeClicked}
             >
@@ -30,8 +44,12 @@ const DashFooter = () => {
 
     const content = (
         <footer className="dash-footer">
-            {goHomeButton}
-            <p>Kullanıcı: {username}</p>
+            <div className='footer_wrapper'>
+                {goHomeButton}
+            </div>
+            <div className='footer_wrapper'>
+                <p className="footer__username">Kullanıcı: {username}</p>
+            </div>
             {/* <p>{today}</p> */}
         </footer>
     )

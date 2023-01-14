@@ -6,13 +6,12 @@ const User = require('../models/User')
 // @access Private
 const getAllNotes = async (req, res) => {
     // Get all notes from MongoDB
-    const notes = await Note.find().lean()
-
+    const notes = await Note.find({ cikisTarihi: { $exists: false} }).sort({createdAt: 0}).lean()
+    
     // If no notes 
     if (!notes?.length) {
         return res.status(400).json({ message: 'Kayıt bulunamadı' })
     }
-
 
     res.json(notes)
 }

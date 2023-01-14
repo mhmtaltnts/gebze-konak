@@ -1,13 +1,18 @@
-import { useGetNotesQuery } from "./notesApiSlice"
+import {useState} from "react"
+import { useGetRaporQuery } from "./notesApiSlice"
 import RaporNote from "./RaporNote"
-import useAuth from "../../hooks/useAuth"
+/* import useAuth from "../../hooks/useAuth" */
 import useTitle from "../../hooks/useTitle"
 import PulseLoader from 'react-spinners/PulseLoader'
+import SearchBar from "../../components/SearchBar/SearchBar"
 
-const NotesList = () => {
+const Rapor = () => {
     useTitle('Kayıt Listesi')
+    const [page, setPage] = useState(1)
+    const [pageCount, setPageCount] = useState(0)
 
-    const { username, isManager, isAdmin } = useAuth()
+    /* const { username, isManager, isAdmin } = useAuth() */
+    const [search, setSearch] = useState("")
 
     const {
         data: notes,
@@ -15,11 +20,7 @@ const NotesList = () => {
         isSuccess,
         isError,
         error
-    } = useGetNotesQuery('notesList', {
-        pollingInterval: 15000,
-        refetchOnFocus: true,
-        refetchOnMountOrArgChange: true
-    })
+    } = useGetRaporQuery("raporList", page)
 
     let content
 
@@ -30,18 +31,43 @@ const NotesList = () => {
     }
 
     if (isSuccess) {
-        const { ids, entities } = notes
-
         let filteredIds
-        if (isManager || isAdmin) {
+        const { ids, entities } = notes
+        let count = ids.length
+        if(!search){
             filteredIds = [...ids]
-        } else {
-            filteredIds = ids.filter(noteId => entities[noteId].username === username)
+        } else{
+            filteredIds = ids.filter(noteId => { return entities[noteId].dorse.toLowerCase().includes(search)})
         }
 
+        const handlePrevious = () => {
+            setPage((pre) => { 
+            if(pre === 1) return pre
+            return pre - 1} )
+        
+        }
+        const handleNext = () => {
+            setPage(
+                (pre) => {
+                    if(pre === pageCount)return pre
+                    return pre + 1
+                }
+            )
+        }
+           console.log(page)  
+
+    
         const tableContent = ids?.length && filteredIds.map(noteId => <RaporNote key={noteId} noteId={noteId} />)
 
-        content = (
+        content = (<>
+            <h2 className="aracsayisi">Toplam araç sayısı: {count}</h2>
+            <div>
+                <SearchBar setSearch={setSearch}/>
+                <div>
+                    <button disabled={page === 1} onClick={handlePrevious}>Önceki</button>
+                    <button disabled={page === pageCount} onClick={handleNext}>Sonraki</button>
+                </div>
+            </div>
             <table className="table table_rapor">
                 <thead className="table__thead">
                     <tr>
@@ -60,9 +86,10 @@ const NotesList = () => {
                     {tableContent}
                 </tbody>
             </table>
+        </>
         )
     }
 
     return content
 }
-export default NotesList
+export default Rapor

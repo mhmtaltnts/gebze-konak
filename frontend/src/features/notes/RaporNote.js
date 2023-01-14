@@ -2,9 +2,9 @@
 import { useGetRaporQuery } from './notesApiSlice'
 import { memo } from 'react'
 
-const Note = ({ noteId }) => {
+const RaporNote = ({ noteId }) => {
 
-    const { note } = useGetRaporQuery("notesList", {
+    const { note } = useGetRaporQuery("rapor", {
         selectFromResult: ({ data }) => ({
             note: data?.entities[noteId]
         }),
@@ -16,7 +16,7 @@ const Note = ({ noteId }) => {
 
         const cikisTarihi = new Date(note.cikisTarihi).toLocaleString('tr-TR', { dateStyle: "medium", timeStyle: "short" })
 
-        const kaldigiGun = Math.ceil( (new Date(note.cikisTarihi).getTime() - new Date(note.createdAt).getTime())/(1000 * 3600 * 24))
+        const kaldigiGun =note.cikisTarihi === undefined ? "" : Math.ceil( (new Date(note.cikisTarihi).getTime() - new Date(note.createdAt).getTime())/(1000 * 3600 * 24))
 
         return (
             <tr className="table__row">
@@ -35,6 +35,6 @@ const Note = ({ noteId }) => {
     } else return null
 }
 
-const memoizedNote = memo(Note)
+const memoizedRapor = memo(RaporNote)
 
-export default memoizedNote
+export default memoizedRapor

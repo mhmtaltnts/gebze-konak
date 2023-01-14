@@ -47,8 +47,8 @@ const DashHeader = () => {
     if (NOTES_REGEX.test(pathname)) {
         newNoteButton = (
             <button
-                className="icon-button"
-                title="New Note"
+                className="dash-header__button icon-button primary__button"
+                title="Yeni Kayıt"
                 onClick={onNewNoteClicked}
             >
                 <FontAwesomeIcon icon={faFileCirclePlus} />
@@ -60,8 +60,8 @@ const DashHeader = () => {
     if (USERS_REGEX.test(pathname)) {
         newUserButton = (
             <button
-                className="icon-button"
-                title="New User"
+                className="dash-header__button icon-button primary__button"
+                title="Yeni Kullanıcı"
                 onClick={onNewUserClicked}
             >
                 <FontAwesomeIcon icon={faUserPlus} />
@@ -74,8 +74,8 @@ const DashHeader = () => {
         if (!USERS_REGEX.test(pathname) && pathname.includes('/dash')) {
             userButton = (
                 <button
-                    className="icon-button"
-                    title="Users"
+                    className="dash-header__button icon-button primary__button"
+                    title="Kullanıcılar"
                     onClick={onUsersClicked}
                 >
                     <FontAwesomeIcon icon={faUserGear} />
@@ -88,8 +88,8 @@ const DashHeader = () => {
     if (!NOTES_REGEX.test(pathname) && pathname.includes('/dash')) {
         notesButton = (
             <button
-                className="icon-button"
-                title="Notes"
+                className="dash-header__button icon-button primary__button"
+                title="Kayıtlar"
                 onClick={onNotesClicked}
             >
                 <FontAwesomeIcon icon={faFilePen} />
@@ -99,8 +99,8 @@ const DashHeader = () => {
 
     const logoutButton = (
         <button
-            className="icon-button"
-            title="Logout"
+            className="dash-header__button icon-button primary__button"
+            title="Çıkış"
             onClick={sendLogout}
         >
             <FontAwesomeIcon icon={faRightFromBracket} />
@@ -129,9 +129,10 @@ const DashHeader = () => {
             <p className={errClass}>{error?.data?.message}</p>
 
             <header className="dash-header">
-                <div className={`dash-header__container `}>
-                    <Link to="/dash">
+                <div className={`dash-header__container `}>                           
+                    <Link to="/dash" className='logo__text'>
                         <h1 className="dash-header__title">Gebze Konak</h1>
+                        <p style={{fontSize:"1.4rem", textAlign: "center", fontWeight:"bold"  }}>Tır Parkı</p>
                     </Link>
                     <nav className="dash-header__nav">
                         {buttonContent}

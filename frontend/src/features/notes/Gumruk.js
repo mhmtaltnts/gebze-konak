@@ -1,16 +1,16 @@
 import { useParams } from 'react-router-dom'
-import GumrukForm from './GumrukForm'
+import EditGumrukForm from './GumrukForm'
 import { useGetNotesQuery } from './notesApiSlice'
-import useAuth from '../../hooks/useAuth'
+/* import useAuth from '../../hooks/useAuth' */
 import PulseLoader from 'react-spinners/PulseLoader'
 import useTitle from '../../hooks/useTitle'
 
-const EditNote = () => {
+const EditGumruk = () => {
     useTitle('Gümrük Girişi')
 
     const { id } = useParams()
 
-    const { username, isManager, isAdmin } = useAuth()
+    /* const { username, isManager, isAdmin } = useAuth() */
 
     const { note } = useGetNotesQuery("notesList", {
         selectFromResult: ({ data }) => ({
@@ -23,14 +23,14 @@ const EditNote = () => {
     if (!note) return <PulseLoader color={"#FFF"} />
 
 
-    if (!isManager && !isAdmin) {
+    /* if (!isManager && !isAdmin) {
         if (note.username !== username) {
             return <p className="errmsg">No access</p>
         }
-    }
+    } */
 
-    const content = <GumrukForm note={note} />
+    const content = <EditGumrukForm note={note} />
 
     return content
 }
-export default EditNote
+export default EditGumruk

@@ -78,8 +78,8 @@ const EditNoteForm = ({ note }) => {
     if (isManager || isAdmin) {
         deleteButton = (
             <button
-                className="icon-button"
-                title="Delete"
+                className="form__button icon-button danger__button"
+                title="Sil"
                 onClick={onDeleteNoteClicked}
             >
                 <FontAwesomeIcon icon={faTrashCan} />
@@ -89,12 +89,26 @@ const EditNoteForm = ({ note }) => {
 
     const content = (
         <div className="form_wrapper">
+            
             <p className={errClass}>{errContent}</p>
 
             <form className="form" onSubmit={e => e.preventDefault()}>
                 <div className="form__title-row">
                     <h2>Kayıt Düzenle</h2>                    
                 </div>
+                <div className="form__action-buttons-wrapper">
+                <div className="form__action-buttons">
+                    <button
+                        className="form__button icon-button success__button"
+                        title="Save"
+                        onClick={onSaveNoteClicked}
+                        disabled={!canSave}
+                    >
+                        <FontAwesomeIcon icon={faSave} />
+                    </button>
+                    {deleteButton}
+                </div>
+                </div> 
                 <label className="form__label" htmlFor="getiren">
                     Getiren Çekici Plakası:</label>
                 <input
@@ -162,21 +176,9 @@ const EditNoteForm = ({ note }) => {
                     value={goturen}
                     onChange={onGoturenChanged}
                 />
-                
-            </form>
-            <div className="form__action-buttons-wrapper">
-                <div className="form__action-buttons">
-                    <button
-                        className="icon-button"
-                        title="Save"
-                        onClick={onSaveNoteClicked}
-                        disabled={!canSave}
-                    >
-                        <FontAwesomeIcon icon={faSave} />
-                    </button>
-                    {deleteButton}
-                </div>
-            </div>
+                                
+            </form> 
+                      
         </div>
     )
 

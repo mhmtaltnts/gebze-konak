@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setCredentials } from './authSlice'
 import { useLoginMutation } from './authApiSlice'
@@ -56,20 +56,27 @@ const Login = () => {
     const handleUserInput = (e) => setUsername(e.target.value)
     const handlePwdInput = (e) => setPassword(e.target.value)
     const handleToggle = () => setPersist(prev => !prev)
+    const onGoHomeClicked = () => navigate('/')
 
     const errClass = errMsg ? "errmsg" : "offscreen"
 
     if (isLoading) return <PulseLoader color={"#FFF"} />
 
     const content = (
-        <section className="public">
-            <header>
-                <h1>Sisteme Giriş</h1>
+        <section className="wrapper">
+            <header className='dash-header'>
+                <div className='dash-header__container'>
+                <div className='logo__text' onClick={onGoHomeClicked}>
+                        <h1 className="dash-header__title">Gebze Konak</h1>
+                        <p style={{fontSize:"1.4rem", textAlign: "center", fontWeight:"bold"  }}>Tır Parkı</p>
+                    </div>
+                </div>
             </header>
-            <main className="login">
+            <main className="dash-container">
                 <div className='form_wrapper'>               
 
                 <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
+                <h1>Sisteme Giriş</h1>
 
                 <form className="form" onSubmit={handleSubmit}>
                     <label htmlFor="username">Kullanıcı Adı:</label>
@@ -109,8 +116,17 @@ const Login = () => {
                 </form>
                 </div>
             </main>
-            <footer>
-                <Link to="/">Anasayfa</Link>
+            <footer className='dash-footer'>
+                
+                    <div className='footer_wrapper'>
+                        <address className="public__addr">
+                            Kirazlıpınar Mah. Yeni Bağdat Cd. No:791 PK:41400 Gebze/ Kocaeli                
+                        </address>
+                    </div>
+                    <div className='footer_wrapper'>
+                        <a href="tel:+902627541406">tel: +90 262 754 14 06</a>
+                    </div>
+                
             </footer>
         </section>
     )

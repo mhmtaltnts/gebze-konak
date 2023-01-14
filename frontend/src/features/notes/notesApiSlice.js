@@ -5,7 +5,7 @@ import {
 import { apiSlice } from "../../app/api/apiSlice"
 
 const notesAdapter = createEntityAdapter({
-    sortComparer: (a, b) => (a.completed === b.completed) ? 0 : a.completed ? 1 : -1
+    sortComparer: (a, b) => (a.createdAt === b.createdAt) ? 0 : a.createdAt ? -1 : 1
 })
 
 const initialState = notesAdapter.getInitialState()
@@ -36,27 +36,20 @@ export const notesApiSlice = apiSlice.injectEndpoints({
             }
         }),
         getRapor: builder.query({
-            query: () => ({
-                url: '/rapor',
+            query: (page=1) => ({
+                url: `/rapor?page=${page}`,
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError
                 },
             }),
             transformResponse: responseData => {
-                const loadedNotes = responseData.map(note => {
+                const loadedNotes = responseData.notes.map(note => {
                     note.id = note._id
                     return note
                 });
                 return notesAdapter.setAll(initialState, loadedNotes)
             },
-            providesTags: (result, error, arg) => {
-                if (result?.ids) {
-                    return [
-                        { type: 'Note', id: 'LIST' },
-                        ...result.ids.map(id => ({ type: 'Note', id }))
-                    ]
-                } else return [{ type: 'Note', id: 'LIST' }]
-            }
+            
         }),
         addNewNote: builder.mutation({
             query: initialNote => ({

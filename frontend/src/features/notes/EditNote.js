@@ -30,6 +30,7 @@ const EditNote = () => {
     }
 
     const content = <EditNoteForm note={note} />
+    
 
     return content
 }

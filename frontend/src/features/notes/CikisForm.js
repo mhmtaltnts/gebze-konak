@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave} from "@fortawesome/free-solid-svg-icons"
 import useAuth from "../../hooks/useAuth"
 
-const EditNoteForm = ({ note }) => {
+const CikisForm = ({ note }) => {
 
     const { username} = useAuth()
 
@@ -57,15 +57,15 @@ const EditNoteForm = ({ note }) => {
                 <div className="form__title-row">
                     <h2>Park Araç Çıkışı</h2>
                     <div className="form__action-buttons">
-                        <button
-                            className="icon-button"
-                            title="Save"
-                            onClick={onSaveNoteClicked}
-                            disabled={!canSave}
-                        >
-                            <FontAwesomeIcon icon={faSave} />
-                        </button>
-                    </div>
+                    <button
+                        className="form__button icon-button success__button"
+                        title="Save"
+                        onClick={onSaveNoteClicked}
+                        disabled={!canSave}
+                    >
+                        <FontAwesomeIcon icon={faSave} />
+                    </button>
+                </div>
                 </div>
                 <label className="form__label" htmlFor="goturen">
                     Götüren Çekici Plakası:</label>
@@ -86,4 +86,4 @@ const EditNoteForm = ({ note }) => {
     return content
 }
 
-export default EditNoteForm
+export default CikisForm

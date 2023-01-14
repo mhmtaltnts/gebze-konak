@@ -3,8 +3,10 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
 import { useNavigate } from 'react-router-dom'
 import { useGetNotesQuery } from './notesApiSlice'
 import { memo } from 'react'
+import useAuth from '../../hooks/useAuth'
 
 const Note = ({ noteId }) => {
+    const { isManager, isAdmin } = useAuth()
 
     const { note } = useGetNotesQuery("notesList", {
         selectFromResult: ({ data }) => ({
@@ -13,6 +15,7 @@ const Note = ({ noteId }) => {
     })
 
     const navigate = useNavigate()
+    /* const yonClass = isAdmin || isManager ? "yonetici" : ""; */
 
     if (note) {
         const handleEdit = () => navigate(`/dash/notes/${noteId}`)
@@ -21,7 +24,7 @@ const Note = ({ noteId }) => {
 
         return (
             <tr className="table__row">
-                <td className="table__cell">{note.getiren}</td>
+                <td className="table__cell mobile_sm">{note.getiren}</td>
                 <td className="table__cell">{note.dorse}</td>
                 <td className="table__cell mobile">{note.firma}</td>
                 <td className="table__cell mobile">{note.mal}</td>
@@ -29,7 +32,7 @@ const Note = ({ noteId }) => {
                 
                 <td className="table__cell">
                     <button
-                        className="table__button"
+                        className="icon-button table__button success__button"
                         onClick={handleGumruk}
                     >
                        <FontAwesomeIcon icon={faPenToSquare} />
@@ -38,21 +41,21 @@ const Note = ({ noteId }) => {
                 
                 <td className="table__cell">
                     <button
-                        className="table__button"
+                        className="icon-button table__button warning__button"
                         onClick={handleCikis}
                     >
                       <FontAwesomeIcon icon={faPenToSquare} />
                     </button>
                 </td>
 
-                <td className="table__cell">
+                {(isAdmin || isManager) && <td className="table__cell">
                     <button
-                        className="table__button"
+                        className="icon-button table__button"
                         onClick={handleEdit}
                     >
                         <FontAwesomeIcon icon={faPenToSquare} />
                     </button>
-                </td>
+                </td>}
             </tr>
         )
 
