@@ -1,11 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
-import { useNavigate } from 'react-router-dom'
-import { useGetNotesQuery } from './notesApiSlice'
-import { memo } from 'react'
-import useAuth from '../../hooks/useAuth'
+import React from 'react'
 
-const Note = ({ noteId }) => {
+const TableData = ({ noteId }) => {
     const { isManager, isAdmin } = useAuth()
 
     const { note } = useGetNotesQuery("notesList", {
@@ -24,15 +19,15 @@ const Note = ({ noteId }) => {
 
         return (
             <tr className="table__row">
-                <td className="table__cell mobile">{note.getiren}</td>
+                <td className="table__cell mobile_sm">{note.getiren}</td>
                 <td className="table__cell">{note.dorse}</td>
-                <td className="table__cell tablet">{note.firma}</td>
-                <td className="table__cell tablet">{note.mal}</td>
-                <td className="table__cell tablet">{note.gumruk}</td>
+                <td className="table__cell mobile">{note.firma}</td>
+                <td className="table__cell mobile">{note.mal}</td>
+                <td className="table__cell mobile">{note.gumruk}</td>
                 
                 <td className="table__cell">
                     <button
-                        className="table__button success__button"
+                        className="icon-button table__button success__button"
                         onClick={handleGumruk}
                     >
                        <FontAwesomeIcon icon={faPenToSquare} />
@@ -41,7 +36,7 @@ const Note = ({ noteId }) => {
                 
                 <td className="table__cell">
                     <button
-                        className="table__button warning__button"
+                        className="icon-button table__button warning__button"
                         onClick={handleCikis}
                     >
                       <FontAwesomeIcon icon={faPenToSquare} />
@@ -50,7 +45,7 @@ const Note = ({ noteId }) => {
 
                 {(isAdmin || isManager) && <td className="table__cell">
                     <button
-                        className="table__button "
+                        className="icon-button table__button"
                         onClick={handleEdit}
                     >
                         <FontAwesomeIcon icon={faPenToSquare} />
@@ -62,6 +57,6 @@ const Note = ({ noteId }) => {
     } else return null
 }
 
-const memoizedNote = memo(Note)
+const memoizedTableData = memo(TableData)
 
-export default memoizedNote
+export default memoizedTableData

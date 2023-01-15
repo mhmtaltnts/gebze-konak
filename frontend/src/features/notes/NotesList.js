@@ -10,12 +10,12 @@ import SearchBar from "../../components/SearchBar/SearchBar"
 const NotesList = () => {
     useTitle('Kayıtları Listele');  
         
-    const { isManager, isAdmin } = useAuth()
+    const {status, isManager, isAdmin } = useAuth()
     
 
     const [search, setSearch] = useState("")
     
-    const calClass = !isAdmin || !isManager ? "calisan" : "";
+    const calClass = (!isAdmin && !isManager) ? "calisan" : "yonetici";
 
     const {
         data: notes,
@@ -57,11 +57,11 @@ const NotesList = () => {
             <table className={`table table--notes ${calClass}`}>
                 <thead className="table__thead">
                     <tr>
-                        <th scope="col" className="table__th mobile_sm" >Getiren Çekici</th>
+                        <th scope="col" className="table__th mobile" >Getiren Çekici</th>
                         <th scope="col" className="table__th">Dorse Plakası</th>
-                        <th scope="col" className="table__th mobile">Firma</th>
-                        <th scope="col" className="table__th mobile">Malın Cinsi</th>
-                        <th scope="col" className="table__th mobile">Gümrük Bilgi</th>
+                        <th scope="col" className="table__th tablet">Firma</th>
+                        <th scope="col" className="table__th tablet">Malın Cinsi</th>
+                        <th scope="col" className="table__th tablet">Gümrük Bilgi</th>
                         <th scope="col" className="table__th">Gümrük İşlem</th>  
                         <th scope="col" className="table__th">Çıkış Yap</th>
                         {(isAdmin || isManager) && <th scope="col" className="table__th">Düzenle</th>}

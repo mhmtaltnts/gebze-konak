@@ -8,13 +8,16 @@ const rapor = async (req, res) => {
     const page = req.query.page || 1
 
     const query = {}
+    const sort = [['_id', -1]]
 
     try {
         const skip = (page-1) * NOTES_PER_PAGE
         const count = await Note.estimatedDocumentCount(query)
         const notes = await Note.find(query)
+            .sort(sort)
             .skip(skip)
             .limit(NOTES_PER_PAGE)
+            
             
         const pageCount = count / NOTES_PER_PAGE
         return res.json({

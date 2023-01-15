@@ -100,8 +100,6 @@ a:focus-visible {
 }
 
 .icon-button {
-  width: 48px;
-  height: 48px;
   font-size: 2.5rem;
   background-color: transparent;
   border: none;
@@ -245,7 +243,6 @@ a:focus-visible {
 }
 .dash-header__button{
   font-size: 2rem;
-  margin-right: 5px;
 }
 
 .dash-container {
@@ -261,7 +258,7 @@ a:focus-visible {
 }
 
 .dash-footer {
-  font-size: 1rem;
+  font-size: 0.9rem;
   background-color: var(--BG-FOOTER-COLOR);
   padding: 0.5em;
   border-top: 1px solid var(--BORDER-COLOR);
@@ -290,10 +287,7 @@ tr:nth-child(odd) td {
 tbody{
   width: 100%;
 }
-th{
-  
- 
-}
+
 .logo__text:hover{
   background-color: #f2f2f2;
   color: #4a44f5;
@@ -330,6 +324,10 @@ th{
   border: none;
 }
 
+.table__button:hover{
+  transform: scale(1.7);
+}
+
 .table__thead {
   width: 100%;
   position: sticky;
@@ -361,7 +359,7 @@ th{
   background-color: var(--INACTIVE);
 }
 
-.table--notes {
+.yonetici {
   grid-template-columns: repeat(8, 1fr) ;
 }
 
@@ -370,12 +368,23 @@ th{
 }
 
 .table_rapor {
-  grid-template-columns: repeat(7, 1fr) ;
+  grid-template-columns: repeat(9, 1fr) ;
 
 }
 
 .table_users{
   grid-template-columns: repeat(3, 1fr) ;
+}
+.searchAndpagination{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+.iter{
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
 }
 
 /* ||  NOTE */
@@ -383,7 +392,7 @@ th{
 .note__created,
 .note__updated,
 .note__username {
-  display: none;
+  display: block;
 }
 
 .note__status {
@@ -481,7 +490,7 @@ th{
 }
 
 
-@media screen and (100px < width <= 400px){
+@media screen and (100px < width <= 640px){
   .dash-header__title{
     font-size: 1.5rem;
   }
@@ -497,15 +506,15 @@ th{
     height: 36px;
   }
 
-  .mobile_sm{
-    display: none;
-  }
-
   .mobile{
     display: none;
   }
-  .table--notes {
-    grid-template-columns: repeat(1, 2fr) repeat(3, 0.5fr) ;
+
+  .tablet{
+    display: none;
+  }
+  .yonetici {
+    grid-template-columns: repeat(1, 2fr) repeat(3, 1fr) ;
   }
   .calisan {
     grid-template-columns: repeat(1, 2fr) repeat(2, 0.5fr) ;
@@ -544,8 +553,13 @@ th{
 .dash-container {
   padding: 1.5rem  ;
 }
+.note__created,
+  .note__updated,
+  .note__username {
+    display: none
+  }
 }
-@media screen and (400px < width <= 800px) {
+@media screen and (640px < width <= 768px) {
   .dash-header__nav {
     padding: 5px;
   }
@@ -579,10 +593,10 @@ th{
     font-size: 1.1rem;
   }
 
-  .mobile{
+  .tablet {
     display: none;
   }
-  .table--notes {
+  .yonetici {
     grid-template-columns: repeat(2, 2fr) repeat(3, 0.5fr) ;
   }
   .calisan {
@@ -591,17 +605,22 @@ th{
   .table_rapor {
     grid-template-columns: repeat(7, 1fr) ;
 
-  }
-  
+  }  
 
   .dash-header__nav {
     gap: 0;
   }
+  .note__created,
+  .note__updated,
+  .note__username {
+    display: none
+  }
+  
   
 }
 
 
-@media screen and (800px < width <= 1200px) {
+@media screen and (768px < width <= 1024px) {
   .form {    
     max-width: 900px;    
   }
@@ -625,7 +644,7 @@ th{
     font-size: 1rem;
   }
 
-  .table--notes {
+  .yonetici {
     grid-template-columns: repeat(8, 1fr) ;
   }
   .calisan {

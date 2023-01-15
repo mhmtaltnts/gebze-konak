@@ -24,7 +24,7 @@
     display: block;
     width: 100%;
     position: absolute;
-    bottom: 50%;
+    bottom: 0px;
     margin: auto;
 }
 .icons{
@@ -44,9 +44,9 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    color: white;
-    border: 1px solid rgb(7, 22, 185);
-    background-color: rgba(62, 73, 194, 0.4);
+    color: rgb(6, 9, 223);
+    border: 1px solid rgb(163, 170, 241);
+    background-color: rgba(100, 107, 184, 0.4);
     cursor: pointer;
 }
 
@@ -59,4 +59,18 @@
     top: 10px;
     z-index: 100;
     font-size: 3rem;
+  }
+
+  @media screen and (100px < width <= 640px){
+    .public__title{
+        font-size: 1.5rem;
+        width: fit-content;
+        position: absolute;
+        margin: auto;
+        left:0;
+        right: 0;
+        top: 10px;
+        z-index: 100;
+      }
+
   }

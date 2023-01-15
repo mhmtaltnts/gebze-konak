@@ -8,7 +8,12 @@ const notesAdapter = createEntityAdapter({
     sortComparer: (a, b) => (a.createdAt === b.createdAt) ? 0 : a.createdAt ? -1 : 1
 })
 
+const raporAdapter = createEntityAdapter({
+    sortComparer: (a, b) => (a.createdAt === b.createdAt) ? 0 : a.createdAt ? -1 : 1
+})
+
 const initialState = notesAdapter.getInitialState()
+const initialStateR = raporAdapter.getInitialState()
 
 export const notesApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
@@ -26,6 +31,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
                 });
                 return notesAdapter.setAll(initialState, loadedNotes)
             },
+            
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
                     return [
@@ -43,12 +49,25 @@ export const notesApiSlice = apiSlice.injectEndpoints({
                 },
             }),
             transformResponse: responseData => {
-                const loadedNotes = responseData.notes.map(note => {
+                const loadedRapor = responseData.notes.map(note => {
                     note.id = note._id
                     return note
-                });
-                return notesAdapter.setAll(initialState, loadedNotes)
+                })
+
+                const {pagination} = responseData
+            
+                const notes = raporAdapter.setAll(initialStateR, loadedRapor)
+                return {notes, pagination}
             },
+            
+            providesTags: (result, error, arg) => {
+                if (result?.ids) {
+                    return [
+                        { type: 'Rapor', id: 'LIST' },
+                        ...result.ids.map(id => ({ type: 'Rapor', id }))
+                    ]
+                } else return [{ type: 'Rapor', id: 'LIST' }]
+            }
             
         }),
         addNewNote: builder.mutation({

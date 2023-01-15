@@ -68,7 +68,7 @@ const Login = () => {
                 <div className='dash-header__container'>
                 <div className='logo__text' onClick={onGoHomeClicked}>
                         <h1 className="dash-header__title">Gebze Konak</h1>
-                        <p style={{fontSize:"1.4rem", textAlign: "center", fontWeight:"bold"  }}>Tır Parkı</p>
+                        <p style={{fontSize:"1rem", textAlign: "center", fontWeight:"bold"  }}>Tır Parkı</p>
                     </div>
                 </div>
             </header>

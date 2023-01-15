@@ -132,7 +132,6 @@ const DashHeader = () => {
                 <div className={`dash-header__container `}>                           
                     <Link to="/dash" className='logo__text'>
                         <h1 className="dash-header__title">Gebze Konak</h1>
-                        <p style={{fontSize:"1.4rem", textAlign: "center", fontWeight:"bold"  }}>Tır Parkı</p>
                     </Link>
                     <nav className="dash-header__nav">
                         {buttonContent}

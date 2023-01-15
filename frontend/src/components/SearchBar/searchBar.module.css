@@ -8,6 +8,7 @@
     display: flex;
     flex-flow: row nowrap;
     margin-bottom: 15px;
+    margin-right: 10px;
   }
   
   /* .search:focus-within {
@@ -29,7 +30,7 @@
   
   .search__button {
     width: 15%;
-    font-size: 1.3rem;
+    font-size: 1rem;
     padding-right: 0.5em;
     color: var(--BUTTON-PRIMARY);
     display: grid;
@@ -55,13 +56,13 @@
   
     .search__button {
       padding-right: 0.5em;
-      font-size: 2rem;
+      font-size: 1.7rem;
     }
   }
 
   @media (min-width:1000px){
     .search {
       width: 55%;
-      font-size: 2rem;
+      font-size: 1.7rem;
     }
   }

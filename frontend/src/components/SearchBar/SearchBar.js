@@ -5,12 +5,12 @@ import classes from "./searchBar.module.css"
 
 const SearchBar = ({setSearch}) => {
   return (    
-            <form className={classes.search} >
+            <form  style={{height:"45px"}}className={classes.search} >
                 <input
                     className={classes.search__input}
                     type="text"
                     id="search"
-                    placeholder='Ara...'
+                    placeholder='Dorse Ara...'
                     onChange={(e) => setSearch(e.target.value)}
                 />
                 <button className={classes.search__button}>

@@ -5,22 +5,26 @@ import RaporNote from "./RaporNote"
 import useTitle from "../../hooks/useTitle"
 import PulseLoader from 'react-spinners/PulseLoader'
 import SearchBar from "../../components/SearchBar/SearchBar"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAnglesLeft, faAnglesRight } from '@fortawesome/free-solid-svg-icons'
 
 const Rapor = () => {
     useTitle('Kayıt Listesi')
     const [page, setPage] = useState(1)
-    const [pageCount, setPageCount] = useState(0)
+    
 
     /* const { username, isManager, isAdmin } = useAuth() */
     const [search, setSearch] = useState("")
 
     const {
-        data: notes,
+        data,
         isLoading,
         isSuccess,
         isError,
         error
-    } = useGetRaporQuery("raporList", page)
+    } = useGetRaporQuery(page)
+    console.log(data)
+    //
 
     let content
 
@@ -32,8 +36,11 @@ const Rapor = () => {
 
     if (isSuccess) {
         let filteredIds
-        const { ids, entities } = notes
-        let count = ids.length
+        const { ids, entities } = data.notes
+        //console.log(notes)
+        let count = data.pagination.count
+        let pageCount= data?.pagination.pageCount
+        //let count = 10
         if(!search){
             filteredIds = [...ids]
         } else{
@@ -57,15 +64,17 @@ const Rapor = () => {
            console.log(page)  
 
     
-        const tableContent = ids?.length && filteredIds.map(noteId => <RaporNote key={noteId} noteId={noteId} />)
+        const tableContent = ids?.length && filteredIds.map(noteId => <RaporNote key={noteId} noteId={noteId} page={page}/>)
 
         content = (<>
             <h2 className="aracsayisi">Toplam araç sayısı: {count}</h2>
-            <div>
+
+            <div className="searchAndpagination">
                 <SearchBar setSearch={setSearch}/>
-                <div>
-                    <button disabled={page === 1} onClick={handlePrevious}>Önceki</button>
-                    <button disabled={page === pageCount} onClick={handleNext}>Sonraki</button>
+                <div className="iter">
+                    <button style={{height:"45px", width:"45px"}} disabled={page === 1} onClick={handlePrevious}><FontAwesomeIcon  icon={faAnglesLeft} /></button>
+                    <p style={{height:"45px", width:"45px", textAlign:"center"}}>{page}/{pageCount}</p>
+                    <button style={{height:"45px", width:"45px"}} disabled={page === pageCount} onClick={handleNext}><FontAwesomeIcon icon={faAnglesRight} /></button>
                 </div>
             </div>
             <table className="table table_rapor">
@@ -75,7 +84,7 @@ const Rapor = () => {
                         <th scope="col" className="table__th">Getiren Çekici</th>
                         <th scope="col" className="table__th">Götüren Çekici</th>
                         <th scope="col" className="table__th">Firma</th>
-                        <th scope="col" className="table__th ">Malın Cinsi</th>
+                        <th scope="col" className="table__th">Malın Cinsi</th>
                         <th scope="col" className="table__th">Gümrük Kayıt</th>
                         <th scope="col" className="table__th note__created">Giriş Tarihi</th>
                         <th scope="col" className="table__th note__updated">Çıkış Tarihi</th>

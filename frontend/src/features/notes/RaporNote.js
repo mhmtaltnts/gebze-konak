@@ -2,19 +2,26 @@
 import { useGetRaporQuery } from './notesApiSlice'
 import { memo } from 'react'
 
-const RaporNote = ({ noteId }) => {
+const RaporNote = ({ noteId, page }) => {
 
-    const { note } = useGetRaporQuery("rapor", {
+    const { note   } = useGetRaporQuery(page, {
         selectFromResult: ({ data }) => ({
-            note: data?.entities[noteId]
+            note: data?.notes.entities[noteId]
         }),
     })
 
 
     if (note) {
-        const created = new Date(note.createdAt).toLocaleString('tr-TR', { dateStyle: "medium", timeStyle: "short" })
 
-        const cikisTarihi = new Date(note.cikisTarihi).toLocaleString('tr-TR', { dateStyle: "medium", timeStyle: "short" })
+        let options = {
+            dateStyle: "short",
+            timeStyle: "short",
+            
+
+        }
+        const created = new Date(note.createdAt).toLocaleString('tr-TR', options)
+
+        const cikisTarihi =note.cikisTarihi === undefined ? "" : new Date(note.cikisTarihi).toLocaleString('tr-TR', options)
 
         const kaldigiGun =note.cikisTarihi === undefined ? "" : Math.ceil( (new Date(note.cikisTarihi).getTime() - new Date(note.createdAt).getTime())/(1000 * 3600 * 24))
 
